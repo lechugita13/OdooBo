@@ -1,0 +1,97 @@
+<odoo>
+    <data>
+
+        <record model="ir.ui.view" id="game.player_list">
+            <field name="name">player list</field>
+            <field name="model">game.player</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="planetes"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="game.player_form">
+            <field name="name">player form</field>
+            <field name="model">game.player</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="planetes"/>
+
+                            <button name="reset_player" type="object" string="Reset" class="oe_highlight"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="game.player_action_window">
+            <field name="name">Players</field>
+            <field name="res_model">game.player</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record model="ir.ui.view" id="game.planets_list">
+            <field name="name">planets list</field>
+            <field name="model">game.planets</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="player"/>
+
+
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="game.planets_form">
+            <field name="name">palnets form</field>
+            <field name="model">game.planets</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="player"/>
+                        </group>
+
+
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="game.planets_action_window">
+            <field name="name">PLANETS</field>
+            <field name="res_model">game.planets</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record model="ir.actions.act_window" id="game.fleet_action_window">
+            <field name="name">FLEET</field>
+            <field name="res_model">game.fleet</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+
+        <menuitem name="Game" id="game.menu_root"/>
+
+        <!-- menu categories -->
+
+        <menuitem name="Dios y Creador" id="game.menu_1" parent="game.menu_root"/>
+
+        <!-- actions -->
+
+        <menuitem name="Players" id="game.menu_1_list" parent="game.menu_1"
+                  action="game.player_action_window"/>
+        <menuitem name="Planets" id="game.menu_2_list" parent="game.menu_1"
+                  action="game.planets_action_window"/>
+        <menuitem name="Fleet" id="game.menu_3_list" parent="game.menu_1"
+                  action="game.fleet_action_window"/>
+
+    </data>
+</odoo>
