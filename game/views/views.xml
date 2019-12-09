@@ -1,66 +1,63 @@
 <odoo>
     <data>
+        <record model="ir.ui.view" id="game.player_form">
+            <field name="name">player form</field>
+            <field name="model">game.player</field>
+            <field name="arch" type="xml">
+                <form>
+
+                    <field name="name"/>
+
+                </form>
+            </field>
+
+        </record>
+
 
         <record model="ir.ui.view" id="game.player_list">
             <field name="name">player list</field>
             <field name="model">game.player</field>
             <field name="arch" type="xml">
                 <tree>
+                    <field name="probaKanban" mode="kanban"/>
                     <field name="name"/>
 
+
+
                 </tree>
-                <form>
-                    <sheet>
-                        <notebook>
-                            <page string="Planets">
+            </field>
+
+        </record>
+
+        <record model="ir.ui.view" id="game.planetes_kanban">
+            <field name="name">Kanban</field>
+            <field name="model">game.planets</field>
+            <field name="arch" type="xml">
+                <kanban>
+                    <!--list of field to be loaded -->
+                    <field name="name"/>
+                    <field name="id"/> <!-- És important afegir el id per al record.id.value -->
+                    <field name="resources"/>
 
 
-                                <field name="probaKanban">
-                                    <field name="id"/> <!-- És important afegir el id per al record.id.value -->
-                                    <kanban>
-                                        <!--list of field to be loaded -->
+                    <templates>
+                        <t t-name="kanban-box">
 
-                                        <t t-name="kanban-box">
-                                            <div t-attf-class="oe_kanban_card oe_kanban_global_click"
-                                                 style="-webkit-box-flex: 0; flex: none; width: 100px; min-width:100px; margin: 0px; border: none;">
-                                                <a type="open">
-                                                    <img class="oe_kanban_image"
-                                                         t-att-src="kanban_image('game.planets', 'image_small', record.id.value)"/>
-                                                </a>
-                                                <div class="oe_product_desc">
-                                                    <a type="open">
-                                                        <field name="name"></field>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </t>
+                            <div class="oe_kanban_card">
 
-                                    </kanban>
-                                </field>
+                                <ul>
 
-                                <field name="planetes">
-                                    <tree>
-                                        <field name="image_small" widget="image" style="width:16px"/>
-                                        <field name="name"/>
+                                    <li>Recursos:
+                                        <field name="resources"></field>
+                                    </li>
+                                </ul>
 
-                                    </tree>
-                                </field>
-
-                                <button name="createPlanet" type="object" string="Create New Fortress"
-                                        class="oe_highlight"/>
-
-                            </page>
-                        </notebook>
-                    </sheet>
-                </form>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
             </field>
         </record>
-
-        <record model="ir.ui.view" id="game.player_form">
-            <field name="name">player form</field>
-            <field name="model">game.player</field>
-        </record>
-
 
         <record model="ir.actions.act_window" id="game.player_action_window">
             <field name="name">Players</field>
@@ -90,7 +87,7 @@
                 <form>
                     <sheet>
                         <group>
-                            <field name="image" widget="image" class="oe_edit_only"/>
+
                             <field name="image_small" widget="image" class="oe_read_only"/>
                             <field name="name"/>
                             <field name="player"/>
@@ -117,7 +114,7 @@
         <record model="ir.actions.act_window" id="game.planets_action_window">
             <field name="name">PLANETS</field>
             <field name="res_model">game.planets</field>
-            <field name="view_mode">tree,form</field>
+            <field name="view_mode">kanban,tree,form</field>
         </record>
 
 
