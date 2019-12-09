@@ -1,21 +1,54 @@
 # -*- coding: utf-8 -*-
+import random
 
-from odoo import models, fields, api
+from odoo import models, fields, api, tools
 
 
 class player(models.Model):
     _name = 'game.player'
     name = fields.Char()
     planetes = fields.One2many('game.planets', 'player')
+    probaKanban = fields.One2many(related='planetes')  # Per al kanban
+
+
+
+    @api.multi
+    def createPlanet(self):
+        for p in self:
+            f_template = self.env.ref('game.planets1')
+            names = ["Ardglass", "Abingdon", "Swindlincote", "Rotherham", "Far Water", "Todmorden", "Walden",
+                     "Lanercoast", "Aempleforth", "Barkamsted", "Swindmore", "Mountmend", "Dalmellington",
+                     "Blencogo", "Beggar's Hole", "Faversham", "Lindow", "Dungannon", "Doveport", "Peterbrugh",
+                     "Limesvilles",
+                     "Grimsby", "Thralkeld", "Dawsbury", "Rotherhithe", "Pavv", "Holmfirth", "Dalmellington",
+                     "Eastcliff", "Bleakburn"]
+            f = self.env['game.planets'].create({
+                'name': str(random.choice(names)),
+                'image': f_template.image,
+                'player': p.id
+            })
+
 
 
 class planets(models.Model):
     _name = 'game.planets'
+    image = fields.Binary()
+    image_small = fields.Binary(string='Image', compute='_get_images', store=True)
     name = fields.Char()
     player = fields.Many2one('game.player')
     flota = fields.One2many('game.fleet', 'naves')
-    image = fields.Binary()
-    recursos1 = fields.One2many('game.recurso', 'recursos')
+    resources = fields.One2many('game.resource', 'planetsR')
+
+
+
+    @api.depends('image')
+    def _get_images(self):
+        for i in self:
+            image = i.image
+            data = tools.image_get_resized_images(image)
+            i.image_small = data["image_small"]
+
+
 
 
 class fleet(models.Model):
@@ -24,15 +57,11 @@ class fleet(models.Model):
     naves = fields.Many2one('game.planets')
 
 
-class recursos(models.Model):
-    _name = 'game.recursos'
-    name = fields.Char()
-    cantidad = fields.Float()
-    recurso = fields.Many2one('game.recurs')
-    recursPlanetes = fields.Many2one('game.planetes')
-
-
-class recurs(models.Model):
-    _name = 'game.recurs'
+class resource(models.Model):
+    _name = 'game.resource'
     name = fields.Char()
     image = fields.Binary()
+    cantidad = fields.Float()
+    planetsR = fields.Many2one('game.planets')
+
+    # recurso = fields.Many2one('game.recurs')
