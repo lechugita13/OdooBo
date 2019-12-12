@@ -3,3 +3,7 @@ access_game_player,game.player,model_game_player,,1,1,1,1
 access_game_planets,game.planets,model_game_planets,,1,1,1,1
 access_game_fleet,game.fleet,model_game_fleet,,1,1,1,1
 access_game_resource,game.resource,model_game_resource,,1,1,1,1
+access_game_recurs,game.recurs,model_game_recurs,,1,1,1,1
+access_game_mines,game.mines,model_game_mines,,1,1,1,1
+access_game_mina,game.mina,model_game_mina,,1,1,1,1
+

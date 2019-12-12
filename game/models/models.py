@@ -11,44 +11,16 @@ class player(models.Model):
     probaKanban = fields.One2many(related='planetes')  # Per al kanban
 
 
-
-    @api.multi
-    def createPlanet(self):
-        for p in self:
-            f_template = self.env.ref('game.planets1')
-            names = ["Ardglass", "Abingdon", "Swindlincote", "Rotherham", "Far Water", "Todmorden", "Walden",
-                     "Lanercoast", "Aempleforth", "Barkamsted", "Swindmore", "Mountmend", "Dalmellington",
-                     "Blencogo", "Beggar's Hole", "Faversham", "Lindow", "Dungannon", "Doveport", "Peterbrugh",
-                     "Limesvilles",
-                     "Grimsby", "Thralkeld", "Dawsbury", "Rotherhithe", "Pavv", "Holmfirth", "Dalmellington",
-                     "Eastcliff", "Bleakburn"]
-            f = self.env['game.planets'].create({
-                'name': str(random.choice(names)),
-                'image': f_template.image,
-                'player': p.id
-            })
-
-
-
 class planets(models.Model):
     _name = 'game.planets'
     image = fields.Binary()
-    image_small = fields.Binary(string='Image', compute='_get_images', store=True)
+    # image_small = fields.Binary(string='Image', compute='_get_images', store=True)
     name = fields.Char()
     player = fields.Many2one('game.player')
     flota = fields.One2many('game.fleet', 'naves')
     resources = fields.One2many('game.resource', 'planetsR')
-
-
-
-    @api.depends('image')
-    def _get_images(self):
-        for i in self:
-            image = i.image
-            data = tools.image_get_resized_images(image)
-            i.image_small = data["image_small"]
-
-
+    minas = fields.One2many('game.mines', 'planetsM')
+    recursosKanban = fields.One2many(related='resources')  # Per al kanban
 
 
 class fleet(models.Model):
@@ -60,8 +32,26 @@ class fleet(models.Model):
 class resource(models.Model):
     _name = 'game.resource'
     name = fields.Char()
-    image = fields.Binary()
     cantidad = fields.Float()
     planetsR = fields.Many2one('game.planets')
+    recurso = fields.Many2one('game.recurs')
 
-    # recurso = fields.Many2one('game.recurs')
+
+class recurs(models.Model):
+    _name = 'game.recurs'
+    name = fields.Char()
+    image = fields.Binary()
+
+
+class mines(models.Model):
+    _name = 'game.mines'
+    name = fields.Char()
+    coste = fields.Float()
+    planetsM = fields.Many2one('game.planets')
+    mine = fields.Many2one('game.mina')
+
+
+class mina(models.Model):
+    _name = 'game.mina'
+    name = fields.Char()
+    nivell = fields.Integer(default=1)

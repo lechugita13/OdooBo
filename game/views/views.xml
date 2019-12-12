@@ -1,3 +1,4 @@
+
 <odoo>
     <data>
         <record model="ir.ui.view" id="game.player_form">
@@ -7,7 +8,7 @@
                 <form>
 
                     <field name="name"/>
-
+                    <field name="planetes"/>
                 </form>
             </field>
 
@@ -21,7 +22,6 @@
                 <tree>
                     <field name="probaKanban" mode="kanban"/>
                     <field name="name"/>
-
 
 
                 </tree>
@@ -48,8 +48,13 @@
                                 <ul>
 
                                     <li>Recursos:
-                                        <field name="resources"></field>
+
+                                        <a type="open">
+                                            <field name="name"/>
+                                        </a>
+
                                     </li>
+
                                 </ul>
 
                             </div>
@@ -70,7 +75,7 @@
             <field name="model">game.planets</field>
             <field name="arch" type="xml">
                 <tree>
-                    <field name="image_small" widget="image"/>
+
                     <field name="name"/>
                     <field name="player"/>
 
@@ -88,11 +93,59 @@
                     <sheet>
                         <group>
 
-                            <field name="image_small" widget="image" class="oe_read_only"/>
                             <field name="name"/>
                             <field name="player"/>
                             <field name="resources"/>
+                            <field name="image" widget="image" alt="Es una foto"/>
                         </group>
+                        <notebook>
+                            <page string="Recursos">
+                                <field name="recursosKanban">
+                                    <kanban>
+                                        <!--list of field to be loaded -->
+                                        <field name="name"/>
+                                        <field name="id"/> <!-- És important afegir el id per al record.id.value -->
+
+                                        <templates>
+                                            <t t-name="kanban-box">
+                                                <div t-attf-class="oe_kanban_card oe_kanban_global_click"
+                                                     style="-webkit-box-flex: 0; flex: none; width: 100px; min-width:100px; margin: 0px; border: none;">
+                                                    <a type="open">
+
+                                                    </a>
+                                                    <div class="oe_product_desc">
+                                                        <a type="open">
+                                                            <field name="name"></field>
+                                                            <field name="cantidad"/>
+
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </t>
+                                        </templates>
+                                    </kanban>
+                                </field>
+
+
+                            </page>
+                            <page string="Recurs">
+
+                                <field name="resources" mode="kanban">
+
+                                </field>
+                            </page>
+                            <page string="Flota">
+
+                                <field name="flota" mode="kanban">
+
+
+                                </field>
+
+                                <button name="create_new_low_fleet" type="object" string="Comprar Nave Ligera"
+                                        class="oe_highlight"/>
+                            </page>
+                        </notebook>
+
                     </sheet>
                 </form>
             </field>
@@ -102,12 +155,27 @@
             <field name="model">game.resource</field>
             <field name="arch" type="xml">
                 <tree>
-                    <field name="image"/>
+
                     <field name="name"/>
                     <field name="cantidad"/>
                     <field name="planetsR"/>
+                    <field name="recurso"/>
+
                 </tree>
             </field>
+        </record>
+
+        <record model="ir.ui.view" id="game.recurs_form">
+            <field name="name">Recurs</field>
+            <field name="model">game.recurs</field>
+            <field name="arch" type="xml">
+                <form>
+
+                    <field name="name"/>
+                    <field name="image" widget="image" alt="imagen"/>
+                </form>
+            </field>
+
         </record>
 
 
@@ -130,6 +198,16 @@
             <field name="view_mode">tree,form</field>
         </record>
 
+        <record model="ir.actions.act_window" id="game.recurs_action_window">
+            <field name="name">Recurs</field>
+            <field name="res_model">game.recurs</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <record model="ir.actions.act_window" id="game.mines_action_window">
+            <field name="name">Mines</field>
+            <field name="res_model">game.mines</field>
+            <field name="view_mode">tree,form</field>
+        </record>
 
         <menuitem name="Game" id="game.menu_root"/>
 
@@ -147,6 +225,9 @@
                   action="game.fleet_action_window"/>
         <menuitem name="Resource" id="game.menu_4_list" parent="game.menu_1"
                   action="game.resource_action_window"/>
-
+        <menuitem name="Recurs" id="game.menu_5_list" parent="game.menu_1"
+                  action="game.recurs_action_window"/>
+        <menuitem name="Mines" id="game.menu_6_list" parent="game.menu_1"
+                  action="game.mines_action_window"/>
     </data>
 </odoo>
