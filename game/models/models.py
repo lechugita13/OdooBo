@@ -8,7 +8,6 @@ class player(models.Model):
     _name = 'game.player'
     name = fields.Char()
     planetes = fields.One2many('game.planets', 'player')
-    probaKanban = fields.One2many(related='planetes')  # Per al kanban
 
 
 class planets(models.Model):
@@ -49,6 +48,14 @@ class mines(models.Model):
     coste = fields.Float()
     planetsM = fields.Many2one('game.planets')
     mine = fields.Many2one('game.mina')
+    producio = fields.Float()
+
+    @api.multi
+    def produccio(self):
+        for record in self:
+            for minaEspe in record.mine:
+                print(minaEspe)
+                record.producio = float(record * record.producio)
 
 
 class mina(models.Model):
