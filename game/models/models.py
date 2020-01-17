@@ -20,8 +20,14 @@ class player(models.Model):
     def create_new_planet(self):
 
         self.planetes.create({
+
             'planetes': self.id
+
         })
+
+    def update_resources(self):
+        print('Updating resources')
+        log = 'Updating resources'
 
 
 class planets(models.Model):
@@ -36,6 +42,14 @@ class planets(models.Model):
     recursosKanban = fields.One2many(related='resources')  # Per al kanban
     date_action = fields.Datetime('Date current action', required=False, readonly=True, select=True,
                                   default=lambda self: fields.datetime.now())
+
+    @api.multi
+    def create_new_low_fleet(self):
+        self.flota.create({
+
+            'flota': self.id
+
+        })
 
 
 class fleet(models.Model):

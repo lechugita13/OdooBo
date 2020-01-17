@@ -23,8 +23,9 @@
                             <field name="name"/>
                             <field name="planetes"/>
 
-                            <button name="create_new_low_fleet" type="object" string="Comprar Nave Ligera"
+                            <button name="create_new_planet" type="object" string="Crear Nou Planeta"
                                     class="oe_highlight"/>
+
 
                         </group>
                     </sheet>
