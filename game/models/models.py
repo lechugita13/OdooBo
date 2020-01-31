@@ -27,7 +27,9 @@ class player(models.Model):
 
     def update_resources(self):
         print('Updating resources')
-        log = 'Updating resources'
+        planets_total = self.env['game.planets'].search([])
+        print(planets_total)
+
 
 
 class planets(models.Model):
@@ -38,6 +40,7 @@ class planets(models.Model):
     player = fields.Many2one('game.player', ondelete='cascade')
     flota = fields.One2many('game.fleet', 'naves')
     invesPlanets = fields.One2many('game.investigacioplaneta', 'planetesInves')
+
     resources = fields.One2many('game.resource', 'planetsR')
     minas = fields.One2many('game.mines', 'planetsM')
     recursosKanban = fields.One2many(related='resources')  # Per al kanban
@@ -83,10 +86,8 @@ class mines(models.Model):
 
     @api.multi
     def produccio(self):
-        for record in self:
-            for minaEspe in record.mine:
-                print(minaEspe)
-                record.producio = float(record * record.producio)
+        self.producio = self.producio + 10;
+        print(self.producio)
 
 
 class mina(models.Model):
@@ -99,11 +100,10 @@ class investigacioplaneta(models.Model):
     _name = 'game.investigacioplaneta'
     name = fields.Char()
     coste = fields.Float()
-    planetesInves = fields.many2one('game.planets')
-    inves = fields.One2many('game.investigacio')
+    planetesInves = fields.Many2one('game.planets')
 
 
 class investigacio(models.Model):
     _name = 'game.investigacio'
     name = fields.Char()
-    investigaciomonta = fields.Many2one('game.investigacioplaneta', 'inves')
+    inves = fields.Many2one('game.investigacioplaneta')
