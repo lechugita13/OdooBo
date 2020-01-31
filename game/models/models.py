@@ -37,6 +37,7 @@ class planets(models.Model):
     name = fields.Char()
     player = fields.Many2one('game.player', ondelete='cascade')
     flota = fields.One2many('game.fleet', 'naves')
+    invesPlanets = fields.One2many('game.investigacioplaneta', 'planetesInves')
     resources = fields.One2many('game.resource', 'planetsR')
     minas = fields.One2many('game.mines', 'planetsM')
     recursosKanban = fields.One2many(related='resources')  # Per al kanban
@@ -92,3 +93,17 @@ class mina(models.Model):
     _name = 'game.mina'
     name = fields.Char()
     nivell = fields.Integer(default=1)
+
+
+class investigacioplaneta(models.Model):
+    _name = 'game.investigacioplaneta'
+    name = fields.Char()
+    coste = fields.Float()
+    planetesInves = fields.many2one('game.planets')
+    inves = fields.One2many('game.investigacio')
+
+
+class investigacio(models.Model):
+    _name = 'game.investigacio'
+    name = fields.Char()
+    investigaciomonta = fields.Many2one('game.investigacioplaneta', 'inves')

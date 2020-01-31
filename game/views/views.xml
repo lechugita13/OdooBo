@@ -185,6 +185,31 @@
 
         </record>
 
+        <record model="ir.ui.view" id="game.investigacio_list">
+            <field name="name">Investigacio list</field>
+            <field name="model">game.investigacio</field>
+            <field name="arch" type="xml">
+                <tree>
+
+                    <field name="name"/>
+
+
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="game.investigacio_form">
+            <field name="name">Recurs</field>
+            <field name="model">game.investigacio</field>
+            <field name="arch" type="xml">
+                <form>
+
+                    <field name="name"/>
+                </form>
+            </field>
+
+        </record>
+
         <record model="ir.actions.act_window" id="game.player_action_window">
             <field name="name">Players</field>
             <field name="res_model">game.player</field>
@@ -221,6 +246,11 @@
             <field name="view_mode">tree,form</field>
         </record>
 
+        <record model="ir.actions.act_window" id="game.investigacio_action_window">
+            <field name="name">Investigacio</field>
+            <field name="res_model">game.investigacio</field>
+            <field name="view_mode">tree,form</field>
+        </record>
         <menuitem name="Game" id="game.menu_root"/>
 
         <!-- menu categories -->
@@ -241,5 +271,8 @@
                   action="game.recurs_action_window"/>
         <menuitem name="Mines" id="game.menu_6_list" parent="game.menu_1"
                   action="game.mines_action_window"/>
+        <menuitem name="Mines" id="game.menu_7_list" parent="game.menu_1"
+                  action="game.investigacio_action_window"/>
+
     </data>
 </odoo>
